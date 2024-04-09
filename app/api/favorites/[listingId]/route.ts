@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { User } from "@/models/entities";
+import { connectToDB } from "@/utils/dbConfig";
 
 interface IParams {
   listingId?: string;
@@ -11,6 +12,8 @@ export async function POST(
   request: Request, 
   { params }: { params: IParams }
 ) {
+  connectToDB(); // Kết nối tới cơ sở dữ liệu
+  
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -40,6 +43,8 @@ export async function DELETE(
   request: Request, 
   { params }: { params: IParams }
 ) {
+  connectToDB(); // Kết nối tới cơ sở dữ liệu
+
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {

@@ -1,11 +1,12 @@
 import { User } from "@/models/entities"
+import { connectToDB } from "@/utils/dbConfig"
 import bcrypt from "bcrypt"
-import NextAuth, { AuthOptions } from "next-auth"
+import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -22,10 +23,11 @@ export const authOptions: AuthOptions = {
         password: { label: 'password', type: 'password' }
       },
       async authorize(credentials) {
+        console.log("credentials is: ", credentials)
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
-
+        connectToDB();
         const user = await User.findOne({ email: credentials.email });
 
         if (!user || !user?.hashedPassword) {
@@ -36,6 +38,8 @@ export const authOptions: AuthOptions = {
           credentials.password,
           user.hashedPassword
         );
+
+        console.log("isCorrectPassword is: ", isCorrectPassword)
 
         if (!isCorrectPassword) {
           throw new Error('Invalid credentials');

@@ -1,4 +1,5 @@
 import { Listing } from "@/models/entities";
+import { connectToDB } from "@/utils/dbConfig";
 
 interface IParams {
   listingId?: string;
@@ -8,6 +9,7 @@ export default async function getListingById(
   params: IParams
 ) {
   try {
+    connectToDB();
     const { listingId } = params;
 
     const listing = await Listing.findOne({ _id: listingId }).populate('user');

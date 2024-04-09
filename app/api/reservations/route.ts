@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { Listing, Reservation } from "@/models/entities";
+import { connectToDB } from "@/utils/dbConfig";
 
 export async function POST(request: Request) {
-  
+    connectToDB();
+
     const currentUser = await getCurrentUser();
 
     if (!currentUser) {

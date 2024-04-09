@@ -1,4 +1,5 @@
 import { Reservation } from "@/models/entities";
+import { connectToDB } from "@/utils/dbConfig";
 
 interface IParams {
   listingId?: string;
@@ -10,6 +11,7 @@ export default async function getReservations(
   params: IParams
 ) {
   try {
+    connectToDB();
     const { listingId, userId, authorId } = params;
 
     const query: any = {};

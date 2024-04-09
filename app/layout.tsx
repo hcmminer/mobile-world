@@ -11,6 +11,7 @@ import ToasterProvider from '@/app/providers/ToasterProvider';
 import './globals.css'
 import ClientOnly from './components/ClientOnly';
 import getCurrentUser from './actions/getCurrentUser';
+import { SessionProvider } from 'next-auth/react';
 
 export const metadata = {
   title: 'Airbnb',
@@ -42,6 +43,7 @@ export default async function RootLayout({
         <div className="pb-20 pt-28">
           {children}
         </div>
+      
       </body>
     </html>
   )

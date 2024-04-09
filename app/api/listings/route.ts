@@ -2,10 +2,12 @@ import { NextResponse } from "next/server";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { Listing } from "@/models/entities";
+import { connectToDB } from "@/utils/dbConfig";
 
 export async function POST(
   request: Request, 
 ) {
+  connectToDB(); // Kết nối tới cơ sở dữ liệu
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {

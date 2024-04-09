@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { Reservation } from "@/models/entities";
+import { connectToDB } from "@/utils/dbConfig";
 
 interface IParams {
   reservationId?: string;
@@ -11,7 +12,7 @@ export async function DELETE(
   request: Request,
   { params }: { params: IParams }
 ) {
-  
+    connectToDB(); // Kết nối tới cơ sở dữ liệu
 
     const currentUser = await getCurrentUser();
 

@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { User } from "@/models/entities";
+import { connectToDB } from "@/utils/dbConfig";
 
 export async function POST(
   request: Request,
 ) {
+  connectToDB(); // Kết nối tới cơ sở dữ liệu
   const body = await request.json();
   const {
     email,

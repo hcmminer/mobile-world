@@ -1,4 +1,5 @@
 import { Listing } from "@/models/entities";
+import { connectToDB } from "@/utils/dbConfig";
 
 export interface IListingsParams {
   userId?: string;
@@ -15,6 +16,7 @@ export default async function getListings(
   params: IListingsParams
 ) {
   try {
+    connectToDB();
     const {
       userId,
       roomCount,

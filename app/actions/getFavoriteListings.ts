@@ -1,9 +1,11 @@
 
 import { Listing } from "@/models/entities";
 import getCurrentUser from "./getCurrentUser";
+import { connectToDB } from "@/utils/dbConfig";
 
 export default async function getFavoriteListings() {
   try {
+    connectToDB();
     const currentUser = await getCurrentUser();
 
     if (!currentUser) {
