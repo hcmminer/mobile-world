@@ -1,24 +1,13 @@
-import { getServerSession } from "next-auth/next"
 
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { User } from "@/models/entities";
 import { connectToDB } from "@/utils/dbConfig";
-
-export async function getSession() {
-  try {
-    const session = await getServerSession(authOptions);
-    console.log("session is:",session);
-    return session;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-}
+import { useSession } from "next-auth/react";
 
 export default async function getCurrentUser() {
   try {
     connectToDB();
-    const session = await getSession();
-  
+    const {data:session} = useSession();
+    
     if (!session?.user?.email) {
       return null;
     }

@@ -1,3 +1,4 @@
+'use client';
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListingById from "@/app/actions/getListingById";
@@ -7,6 +8,7 @@ import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
 
 import ListingClient from "./ListingClient";
+import { SessionProvider } from "next-auth/react";
 
 interface IParams {
   listingId?: string;
@@ -20,13 +22,16 @@ const ListingPage = async ({ params }: { params: IParams }) => {
 
   if (!listing) {
     return (
+      <SessionProvider>
       <ClientOnly>
         <EmptyState />
       </ClientOnly>
+      </SessionProvider>
     );
   }
 
   return (
+    <SessionProvider>
     <ClientOnly>
       <ListingClient
         listing={listing}
@@ -34,6 +39,7 @@ const ListingPage = async ({ params }: { params: IParams }) => {
         currentUser={currentUser}
       />
     </ClientOnly>
+    </SessionProvider>
   );
 }
  

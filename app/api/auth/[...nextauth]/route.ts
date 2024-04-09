@@ -49,6 +49,52 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
+  callbacks: {
+    async signIn({ user, account }: { user: any; account: any }) {
+      if (account.provider === "google") {
+        try {
+          const { name, email } = user;
+          connectToDB();
+          const ifUserExists = await User.findOne({ email });
+          if (ifUserExists) {
+            return user;
+          }
+          const newUser = new User({
+            name: name,
+            email: email,
+          });
+          const res = await newUser.save();
+          if (res.status === 200 || res.status === 201) {
+            console.log(res)
+            return user;
+          }
+
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      return user;
+    },
+    async jwt({ token, user }) {
+        console.log(token, user);
+      if (user) {
+        token.email = user.email;
+        token.name = user.name;
+      }
+      return token;
+    },
+
+    async session({ session, token }: { session: any; token: any }) {
+        console.log(session, token);
+      if (session.user) {
+        session.user.email = token.email;
+        session.user.name = token.name;
+        session.user.id = token.id
+      }
+      console.log(session);
+      return session;
+    },
+  },
   pages: {
     signIn: '/',
   },
@@ -59,4 +105,5 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 }
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

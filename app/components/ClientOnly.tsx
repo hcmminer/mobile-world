@@ -1,5 +1,6 @@
 'use client';
 
+import { SessionProvider, useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
 
 interface ClientOnlyProps {
@@ -17,11 +18,7 @@ const ClientOnly: React.FC<ClientOnlyProps> = ({
 
   if (!hasMounted) return null;
 
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <SessionProvider>{children}</SessionProvider>;
 };
 
 export default ClientOnly;
