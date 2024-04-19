@@ -20,6 +20,7 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({
   currentUser
 }) => {
+  console.log("🚀 ~ currentUser:", {currentUser})
   const router = useRouter();
 
   const loginModal = useLoginModal();
@@ -58,7 +59,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
             cursor-pointer
           "
         >
-          Airbnb your home
+          Airbnb your home __________
         </div>
         <div 
         onClick={toggleOpen}
@@ -80,7 +81,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src={currentUser?.image} />
+            <b >{currentUser?.name || "bandv_user"} </b>
+            {/* <Avatar src={currentUser?.image} /> */}
           </div>
         </div>
       </div>

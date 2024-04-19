@@ -13,6 +13,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({
   currentUser,
 }) => {
+  console.log("🚀 ~ currentUser:", {currentUser})
   return ( 
     <div className="fixed w-full bg-white z-10 shadow-sm">
       <div
@@ -21,6 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({
           border-b-[1px]
         "
       >
+        <h1>@@@@@@@@@@@@@@@@@@@@@@@@@</h1>
       <Container>
         <div 
           className="

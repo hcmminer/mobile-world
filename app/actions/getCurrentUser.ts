@@ -6,7 +6,9 @@ import { useSession } from "next-auth/react";
 export default async function getCurrentUser() {
   try {
     connectToDB();
+    console.log("🚀 ~ getCurrentUser ~ session")
     const {data:session} = useSession();
+    console.log("🚀 ~ getCurrentUser ~ session:", session)
     
     if (!session?.user?.email) {
       return null;
