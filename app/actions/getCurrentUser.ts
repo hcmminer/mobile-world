@@ -5,15 +5,20 @@ import { useSession } from "next-auth/react";
 
 export default async function getCurrentUser() {
   try {
-    connectToDB();
+    
     console.log("🚀 ~ getCurrentUser ~ session")
-    const {data:session} = useSession();
+    const {data:session, status } = useSession();
+    console.log("🚀 ~ getCurrentUser ~ status:", status)
+    console.log("🚀 ~ getCurrentUser ~ session2")
     console.log("🚀 ~ getCurrentUser ~ session:", session)
+
+
     
     if (!session?.user?.email) {
       return null;
     }
 
+    connectToDB();
     const currentUser = await User.findOne({ email: session.user.email as string });
 
     console.log("currentUser is: " ,currentUser);
